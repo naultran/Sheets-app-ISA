@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  </head>
+  <body>
+    <form id="myform">
+    
+    <div class="block form-group">
+    <label for="term_name">Factor Name (required)</label>
+    <input type='text' name='term_name' id="term_name" required="required"/>
+    </div>
+
+    <div class="block form-group">
+    <label for="Factor_ontology">Factor Ontology Source (e.g. EFO)</label><br>
+    <a href="https://www.ebi.ac.uk/ols/index">Click + CTRL here to lookup ontology terms</a><br>
+    <input type='text' name='Factor_ontology' id="Factor_ontology"/>
+    </div>
+
+    <div class="block form-group">
+    <label for="Factor_ontology_IRI">Factor Ontology URL</label>
+    <input type='text' name='Factor_ontology_IRI' id="Factor_ontology_IRI"/>
+    </div>
+    
+    <div class="block form-group">
+    <label for="Factor_ontology_unit">Factor has unit?</label>
+    <input type='checkbox' name='Factor_ontology_unit' id="Factor_ontology_unit" value="Yes"/>
+    </div>    
+    
+    <div class="block">
+    <button type="submit" class="action">Submit</button>
+    </div>
+    
+    </form>
+    <script>
+    document.querySelector("#myform").addEventListener("submit", 
+    function(e)
+    {
+    e.preventDefault();    //stop form from submitting
+    google.script.run.addNewFactor(this);
+     google.script.host.close();//close this dialogbox
+    }
+    );
+    </script>
+  </body>
+</html>

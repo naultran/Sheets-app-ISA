@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  </head>
+  <body onload="myFunction()">
+    <form id="myform">
+
+    <div class="block form-group">
+    <label for="Rance">Assign parameter to protocol:</label>
+    <select id="Rance" name="Rance2"></select><br>
+    </div>
+    
+    <div class="block form-group">
+    <label for="term_name">Parameter Name</label>
+    <input type='text' name='term_name' id="term_name" required="required"/>
+    </div>
+
+    <div class="block form-group">
+    <label for="Parameter_ontology_status">Parameter has ontology?</label>
+    <input type='checkbox' name='Parameter_ontology_status' id="Parameter_ontology_status" value="Yes"/>
+    </div>    
+
+    <div class="block form-group">
+    <label for="Parameter_ontology">Parameter Ontology Source (e.g. EFO)</label><br>
+    <a href="https://www.ebi.ac.uk/ols/index">Click + CTRL here to lookup ontology terms</a><br>
+    <input type='text' name='Parameter_ontology' id="Parameter_ontology"/>
+    </div>
+
+    <div class="block form-group">
+    <label for="Parameter_ontology_IRI">Factor Ontology URL</label>
+    <input type='text' name='Parameter_ontology_IRI' id="Parameter_ontology_IRI"/>
+    </div>
+    
+    <div class="block form-group">
+    <label for="Parameter_ontology_unit">Parameter has unit?#someVarName</label>
+    <input type='checkbox' name='Parameter_ontology_unit' id="Parameter_ontology_unit" value="Yes"/>
+    </div>    
+    
+    <div class="block">
+    <button type="submit" class="action">Submit</button>
+    </div>
+    
+    </form>
+    <script>
+    document.querySelector("#myform").addEventListener("submit", 
+    function(e)
+    {
+    e.preventDefault();    //stop form from submitting
+    google.script.run.addNewParameter(this);
+     google.script.host.close();//close this dialogbox
+    }
+    );
+    
+    function myFunction() {
+      dropdown = document.getElementById('Rance');
+      var array = <?=data?>;
+      var cleaned = array.replace("[[","");
+      var cleaned = cleaned.replace("]]");
+      var arrayNames = cleaned.split(",");
+      for (var i = 0; i < arrayNames.length; i++){
+        if (arrayNames[i].length > 2){
+          dropdown.options[i] = new Option(arrayNames[i], i + 2);
+        } else {break;}
+      }
+    }
+    </script>
+  </body>
+</html>

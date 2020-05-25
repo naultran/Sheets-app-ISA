@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  </head>
+  <body>
+    <form id="myform">
+    
+    <div class="block form-group">
+    <label for="term_name">Protocol Name (required)</label>
+    <input type='text' name='term_name' id="term_name" required="required" style="width: 700px;"/>
+    </div>
+
+    <div class="block form-group">
+    <label for="Protocol_details">Describe your protocol</label><br>    
+    <input type='text' name='Protocol_details' id="Protocol_details" style="width: 700px; height: 500px;"/>
+    </div>
+
+    <div class="block form-group">
+    <label for="Protocol_URL">Protocols.io DOI</label>
+    <a href="https://www.protocols.io">Click + CTRL here to find your protocol</a><br>
+    <input type='text' name='Protocol_URL' id="Protocol_URL" style="width: 700px;"/>
+    </div>
+        
+    <div class="block">
+    <button type="submit" class="action">Submit</button>
+    </div>
+    
+    </form>
+    <script>
+    document.querySelector("#myform").addEventListener("submit", 
+    function(e)
+    {
+    e.preventDefault();    //stop form from submitting
+    google.script.run.addNewProtocol(this);
+     google.script.host.close();//close this dialogbox
+    }
+    );
+    </script>
+  </body>
+</html>
