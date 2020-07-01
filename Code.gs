@@ -1,29 +1,11 @@
-//LOAD ISA tools
-function onOpen() {
-  SpreadsheetApp.getUi()
-      .createMenu('ISA tools')
-        .addItem('Create New Datasheet..', 'showSidebar')
-        .addItem('Add Minimum Reporting Standards from library..', 'showSidebar')
-        .addItem('Import Ontology Term', 'runit')
-        .addSeparator()
-        .addSubMenu(SpreadsheetApp.getUi().createMenu('Add to Investigation')
-             .addItem('Add Protocol', 'addProtocol')
-             .addItem('OntologyTest', 'showSidebar')
-             .addItem('USE CHECKLIST', 'addcheck'))
-      .addSeparator()
-        .addSubMenu(SpreadsheetApp.getUi().createMenu('Edit Study')
-            .addItem('Add Parameter', 'addParameter')
-            .addItem('Add Characteristic', 'addItem')
-            .addItem('Add Factor', 'addFactor'))         
-      .addSeparator()
-        .addSubMenu(SpreadsheetApp.getUi().createMenu('Edit Assay')
-            .addItem('Add Parameter', 'addItem')
-            .addItem('Add Parameter', 'addItem')
-            .addItem('Add Parameter', 'addItem') )                   
-      .addSeparator()
-      .addItem('Help', 'showSidebar')
-      .addToUi();  
-}
+
+
+
+
+
+
+
+
 
 
 function readTemplate(doi) {

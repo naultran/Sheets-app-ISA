@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body onload="myFunction()">
+    <? var mimUrl = getMIM(); ?>
+    <div class="form-group" >
+        <h3> Select applicable Minimum Information Checklists and click the apply button to generate template.</h3>
+        <button style="float:right;" id="search-button" class="action" onclick="doBioPortalSearch($('.queryString').val(), $('.ontologySelect').val());">Apply</button>
+        <div id="checklists" style="font-weight: bold; font-size: 130%; vertical-align: middle; display: inline-block; padding-bottom: 1em">
+        </div>
+    </div>
+    
+    <script>
+    function myFunction() {
+      var mimChoices = document.getElementById('checklists');
+      var url = <?= mimUrl ?>;
+      var mimList = JSON.parse(url);
+      
+      for (var i = 0; i < mimList.length; i++){
+        var checkLabel = (JSON.stringify(mimList[i].name) + ' version' + JSON.stringify(mimList[i].version))
+          .replace(/\"/g, "");
+      
+        var checkbox = document.createElement('input');
+        checkbox.type = "checkbox";
+        checkbox.name = mimList[i].name;
+        checkbox.value = mimList[i].name;
+        checkbox.id = mimList[i].name;
+      
+        var label = document.createElement('label');
+        label.htmlFor = mimList[i].name;
+        label.appendChild(document.createTextNode(checkLabel));
+      
+        var hlink = document.createElement("a");
+        hlink.href = JSON.stringify(mimList[i].link).replace(/\"/g,"");
+        alert(hlink.href);
+        hlink.innerHTML = "Details";
+      
+        mimChoices.appendChild(checkbox);
+        mimChoices.appendChild(label);
+        mimChoices.appendChild(document.createElement("br"));
+        mimChoices.appendChild(hlink);
+        mimChoices.appendChild(document.createElement("br"));
+      }
+    }
+    </script>
+  </body>
+</html>
+
+
