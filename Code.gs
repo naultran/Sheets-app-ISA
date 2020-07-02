@@ -3,26 +3,6 @@
 
 
 
-
-
-
-
-
-function readTemplate(doi) {
-  Logger.log('Range')
-}
-
-
-
-
-
-
-
-
-
-
-
-
 //General Functions
 //----------------------------
 function goToFirstColumnAfterLastRowWithData(sheet, rowNum) {
