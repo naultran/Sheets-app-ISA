@@ -17,8 +17,13 @@
       var mimChoices = document.getElementById('checklists');
       var url = <?= mimUrl ?>;
       var mimList = JSON.parse(url);
-      
       for (var i = 0; i < mimList.length; i++){
+        var name = JSON.stringify(mimList[i].name);
+        var fullname = JSON.stringify(mimList[i].fullname);
+        var version = JSON.stringify(mimList[i].version);
+        var link = JSON.stringify(mimList[i].link);
+      
+        if (name !== 'null' && version !== 'null') { 
         var checkLabel = (JSON.stringify(mimList[i].name) + ' version' + JSON.stringify(mimList[i].version))
           .replace(/\"/g, "");
       
@@ -34,7 +39,6 @@
       
         var hlink = document.createElement("a");
         hlink.href = JSON.stringify(mimList[i].link).replace(/\"/g,"");
-        alert(hlink.href);
         hlink.innerHTML = "Details";
       
         mimChoices.appendChild(checkbox);
@@ -42,6 +46,7 @@
         mimChoices.appendChild(document.createElement("br"));
         mimChoices.appendChild(hlink);
         mimChoices.appendChild(document.createElement("br"));
+        }
       }
     }
     </script>
