@@ -1,1 +1,43 @@
-[{ "name" : "MIAME", "version" : "1.0", "link" : "https://fairsharing.org/FAIRsharing.32b10v", "study_config" : "https://raw.githubusercontent.com/zacharewskilab/MIATE/master/isaconfigs/studySample.xml", "investigation_config" : "https://raw.githubusercontent.com/zacharewskilab/MIATE/master/isaconfigs/investigation.xml", "assay_config" : ""},	{ "name" : "MIAPE", "version" : "1.0", "link" : "https://fairsharing.org/FAIRsharing.32b10v" },	{ "name" : "MIATE", "version" : "2.0", "link" : "https://github.com/zacharewskilab/MIATE/" }, { "name" : "MIADE", "version" : "1.0", "link" : "https://fairsharing.org/FAIRsharing.32b10v" }]
+[
+	{
+		"resource_name": "dbZach",
+		"fullname": "Zacharewski lab minimum information checklist library",
+		"link": "https://fairsharing.org/FAIRsharing.32b10v"
+	},
+	{
+		"name": "MIAME",
+		"fullname": "Minimum Information about Microarray Experiments",
+		"version": "1.0",
+		"link": "https://fairsharing.org/FAIRsharing.32b10v",
+		"study_config": "https://raw.githubusercontent.com/zacharewskilab/MIATE/master/isaconfigs/studySample.xml",
+		"investigation_config": "https://raw.githubusercontent.com/zacharewskilab/MIATE/master/isaconfigs/investigation.xml",
+		"assay_config": ""
+	},
+	{
+		"name": "MIAPE",
+		"fullname": "Minimum Information about Proteomics Experiments",
+		"version": "1.0",
+		"link": "https://fairsharing.org/FAIRsharing.32b10v"
+	},
+	{
+		"name": "MIATE",
+		"fullname": "Minimum Information about Animal Toxicology Experiments",
+		"version": "2.0",
+		"link": "https://github.com/zacharewskilab/MIATE/"
+		"study_config": "https://raw.githubusercontent.com/zacharewskilab/MIATE/master/isaconfigs/studySample.xml",
+		"investigation_config": "https://raw.githubusercontent.com/zacharewskilab/MIATE/master/isaconfigs/investigation.xml",
+		"assay_config": ""
+	},
+	{
+		"name": "MINSEQE",
+		"fullname": "Minimum Information about Sequencing Experiments",
+		"version": "1.0",
+		"link": "https://fairsharing.org/FAIRsharing.32b10v"
+	},
+	{
+		"name": "MIFlowCyt",
+		"fullname": "Minimum Information about Flow Cytometry Experiments",
+		"version": "1.0",
+		"link": "https://fairsharing.org/FAIRsharing.32b10v"
+	}
+]
