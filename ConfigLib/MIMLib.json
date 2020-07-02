@@ -23,7 +23,7 @@
 		"name": "MIATE",
 		"fullname": "Minimum Information about Animal Toxicology Experiments",
 		"version": "2.0",
-		"link": "https://github.com/zacharewskilab/MIATE/"
+		"link": "https://github.com/zacharewskilab/MIATE/",
 		"study_config": "https://raw.githubusercontent.com/zacharewskilab/MIATE/master/isaconfigs/studySample.xml",
 		"investigation_config": "https://raw.githubusercontent.com/zacharewskilab/MIATE/master/isaconfigs/investigation.xml",
 		"assay_config": ""
