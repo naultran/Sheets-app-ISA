@@ -16,6 +16,8 @@ function getMIM() {
   }
   
   var mimLib = gitJSON('https://raw.githubusercontent.com/naultran/Sheets-app-ISA/master/ConfigLib/MIMLib.json');
+  Logger.log('Rance');
+  Logger.log(mimLib);
   return mimLib
 }
 

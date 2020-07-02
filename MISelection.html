@@ -4,15 +4,37 @@
     <base target="_top">
   </head>
   <body onload="myFunction()">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons.css">
     <? var mimUrl = getMIM(); ?>
-    <div class="form-group" >
+    <div id="checkbox-form" class="form-group" >
         <h3> Select applicable Minimum Information Checklists and click the apply button to generate template.</h3>
-        <button style="float:right;" id="search-button" class="action" onclick="doBioPortalSearch($('.queryString').val(), $('.ontologySelect').val());">Apply</button>
-        <div id="checklists" style="font-weight: bold; font-size: 130%; vertical-align: middle; display: inline-block; padding-bottom: 1em">
+        <button style="float:right;" id="search-button" class="action" onclick="submitForm();">Apply2</button>
+        <div id="checklists" style="font-weight: bold; font-size: 110%; vertical-align: middle; display: inline-block; padding-bottom: 1em">
         </div>
     </div>
     
+    <div id="spinner" class="block" style="display:none;">
+        <div class="loading" style="margin-right:-10px;float:left;">
+            <img style="height:60px;width:60px;" src="https://5079980847011989849-a-1802744773732722657-s-sites.googlegroups.com/site/scriptsexamples/ProgressSpinner.gif"/>
+            Populating template, please wait...
+        </div>
+    </div>
+    
+    <br>
+    <br>
+    
+    <footer id="footer">
+    </footer>
+    
     <script>
+    $( document ).ready(function() {
+      $("#search-box").keyup(function(event){
+        if(event.keyCode == 13){
+          $("#search-button").click();
+        }
+      });
+    });
+    
     function myFunction() {
       var mimChoices = document.getElementById('checklists');
       var url = <?= mimUrl ?>;
@@ -23,31 +45,63 @@
         var version = JSON.stringify(mimList[i].version);
         var link = JSON.stringify(mimList[i].link);
       
-        if (name !== 'null' && version !== 'null') { 
-        var checkLabel = (JSON.stringify(mimList[i].name) + ' version' + JSON.stringify(mimList[i].version))
-          .replace(/\"/g, "");
+        if (name == null && version == null) { 
+          var footer = document.getElementById('footer')
+          footer.innerHTML = "Using MIM library " + mimList[i].fullname + " <a id='source' href='" + mimList[i].link + "'>" + mimList[i].resource_name + "</a>"
+        } else {
+          var checkLabel = (JSON.stringify(mimList[i].name) + ' v' + JSON.stringify(mimList[i].version))
+            .replace(/\"/g, "");
       
-        var checkbox = document.createElement('input');
-        checkbox.type = "checkbox";
-        checkbox.name = mimList[i].name;
-        checkbox.value = mimList[i].name;
-        checkbox.id = mimList[i].name;
+          var checkbox = document.createElement('input');
+          checkbox.type = "checkbox";
+          checkbox.name = "mimID";
+          checkbox.value = mimList[i].name;
+          checkbox.id = mimList[i].name;
       
-        var label = document.createElement('label');
-        label.htmlFor = mimList[i].name;
-        label.appendChild(document.createTextNode(checkLabel));
+          var label = document.createElement('label');
+          label.htmlFor = mimList[i].name;
+          label.appendChild(document.createTextNode(checkLabel));
       
-        var hlink = document.createElement("a");
-        hlink.href = JSON.stringify(mimList[i].link).replace(/\"/g,"");
-        hlink.innerHTML = "Details";
-      
-        mimChoices.appendChild(checkbox);
-        mimChoices.appendChild(label);
-        mimChoices.appendChild(document.createElement("br"));
-        mimChoices.appendChild(hlink);
-        mimChoices.appendChild(document.createElement("br"));
+          var hlink = document.createElement("a");
+          hlink.href = JSON.stringify(mimList[i].link).replace(/\"/g,"");
+          hlink.innerHTML = mimList[i].fullname;
+          
+          mimChoices.appendChild(checkbox);
+          mimChoices.appendChild(label);
+          mimChoices.appendChild(document.createElement('br'));
+          mimChoices.appendChild(hlink);
+          mimChoices.appendChild(document.createElement('br'));
+          mimChoices.appendChild(document.createElement('br'));
+          mimChoices.appendChild(document.createElement('br'));
         }
       }
+    }
+    
+    function submitForm() {
+      showSpinner();
+      var choices = document.getElementsByName('mimID');
+      var selected = [];
+      for (var i=0; i<choices.length; i++) {
+        if (choices[i].checked) {
+          selected.push(choices[i].id);
+        }
+      }
+      
+      var resLink = document.getElementById("source").getAttribute("href");
+      google.script.run.withSuccessHandler(onSuccess).createTemplate(JSON.stringify(selected), resLink);
+    }
+    
+    function showSpinner() {
+        document.getElementById("checkbox-form").style.display = "none";
+        document.getElementById("spinner").style.display = "block";
+    }
+    
+    function onFailure() {
+      alert('FAIL!');
+    }
+    
+    function onSuccess() {
+      document.getElementById("spinner").style.display = "none";
     }
     </script>
   </body>
