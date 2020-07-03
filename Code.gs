@@ -3,7 +3,8 @@ function testingIt() {
   var libLink = sheet.getSheetByName("_MIMOptions").getRange("A1").getValue();
   var mimLib = JSON.parse(gitJSON(libLink));
   var fields = getXML('https://raw.githubusercontent.com/zacharewskilab/MIATE/master/isaconfigs/studySample.xml');
-  parseStudy(fields);
+  var out = parseStudy(fields);
+  Logger.log(out);     
 }
 
 
@@ -48,9 +49,9 @@ function parseStudy(fields){
       jsonActive.multiple = multiple.getValue();
       jsonActive.hidden = hidden.getValue();
       jsonActive.forced_ontology = forced_ontology.getValue();
-      try{jsonActive.comment = fields[i].getChild('description', ns).getValue()} catch(e){};
-      try{jsonActive.default_value = fields[i].getChild('default-value', ns).getValue()} catch(e){};
-      try{jsonActive.list_values = fields[i].getChild('list-values', ns).getValue()} catch(e){};
+      try{jsonActive.comment = fields[i].getChild('description', ns).getValue().replace(/\n/g, "").replace(/\t/g, "")} catch(e){};
+      try{jsonActive.default_value = fields[i].getChild('default-value', ns).getValue().replace(/\n/g, "").replace(/\t/g, "")} catch(e){};
+      try{jsonActive.list_values = fields[i].getChild('list-values', ns).getValue().replace(/\n/g, "").replace(/\t/g, "")} catch(e){};
       
       if (fields[i + 1].getName() == 'unit-field'){
         jsonActive.unit_field = 'TRUE';
@@ -63,9 +64,12 @@ function parseStudy(fields){
       }
     }
   }
-  Logger.log(JSON.stringify(jsonXML));
-  Logger.log(Protocols)
-  Logger.log(Fields)
+  
+  return {
+    jsonXML: jsonXML,
+    Protocols: Protocols,
+    Fields: Fields
+  }
 }
 
 
