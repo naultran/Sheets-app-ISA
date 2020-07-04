@@ -2,23 +2,34 @@ function testingIt() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet();
   var libLink = sheet.getSheetByName("_MIMOptions").getRange("A1").getValue();
   var mimLib = JSON.parse(gitJSON(libLink));
-  var fields = getXML('https://raw.githubusercontent.com/zacharewskilab/MIATE/master/isaconfigs/studySample.xml');
-  var out = parseStudy(fields);
-  Logger.log(out);     
+  var template1 = getXML('https://raw.githubusercontent.com/zacharewskilab/MIATE/master/isaconfigs/studySample.xml');
+  var template2 = getXML('https://raw.githubusercontent.com/naultran/Sheets-app-ISA/master/ConfigLib/studySample.xml');
+  var fields = getXML('https://raw.githubusercontent.com/zacharewskilab/MIATE/master/isaconfigs/transcription_seq.xml');
+  //https://raw.githubusercontent.com/zacharewskilab/MIATE/master/isaconfigs/investigation.xml 
+  var study = parseAssay(fields);
+  
+  //testingMerge(parseStudy(template1), parseStudy(template2));
+}
+
+function testingMerge(study1, study2) {
+  Logger.log(study1.Protocols);
+  Logger.log(study2.Protocols);
 }
 
 
-
-//Testing the checklist portion
-function parseStudy(fields){ 
-  var ns = XmlService.getNamespace('http://www.ebi.ac.uk/bii/isatab_configuration#'); //How to find namespace...
+function parseAssay(fields){ 
+  
+  //Exactly the same as parseStudy.... but additional criteria. 
+  
+  var ns = XmlService.getNamespace('http://www.ebi.ac.uk/bii/isatab_configuration#'); //How to find namespace?...
   var jsonXML = [];
   var Protocols = [];
   var Fields = [];
   
-  var jsonProtocol = [];
+  var jsonProtocol = {};
   
   for (var i = 0; i < fields.length; i++) {
+    Logger.log(fields[i].getName());
     var header = fields[i].getAttribute('header');
     var data_type = fields[i].getAttribute('data-type');
     var file_field = fields[i].getAttribute('is-file-field');
@@ -57,11 +68,18 @@ function parseStudy(fields){
         jsonActive.unit_field = 'TRUE';
       }
       
+      if (header.getValue() == 'Sample Name') {
+        if (jsonProtocol.protocol_type !== null) {
+          jsonXML.push(jsonProtocol);
+          jsonProtocol = {};
+        }
+      }
+      
       if (jsonProtocol.protocol_type == null) {
         jsonXML.push(jsonActive);
       } else {
         jsonProtocol.protocol_elements.push(jsonActive);
-      }
+      } 
     }
   }
   

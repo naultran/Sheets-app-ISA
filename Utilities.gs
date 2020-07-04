@@ -62,23 +62,71 @@ function getMIMLinks() {
   return configurations
 }
 
+function parseStudy(fields){ 
+  var ns = XmlService.getNamespace('http://www.ebi.ac.uk/bii/isatab_configuration#'); //How to find namespace?...
+  var jsonXML = [];
+  var Protocols = [];
+  var Fields = [];
+  
+  var jsonProtocol = {};
+  
+  for (var i = 0; i < fields.length; i++) {
+    var header = fields[i].getAttribute('header');
+    var data_type = fields[i].getAttribute('data-type');
+    var file_field = fields[i].getAttribute('is-file-field');
+    var multiple = fields[i].getAttribute('is-multiple-value');
+    var hidden = fields[i].getAttribute('is-hidden');
+    var forced_ontology = fields[i].getAttribute('is-forced-ontology');
+    var protocol_type = fields[i].getAttribute('protocol-type');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-function testFunction() {
-  var lib = 'https://raw.githubusercontent.com/naultran/Sheets-app-ISA/master/ConfigLib/MIMLib.json';
-  gitJSON(lib);
+    if (fields[i].getName() == 'protocol-field') {
+      Protocols.push(protocol_type.getValue());
+      if (jsonProtocol.protocol_type == null) {
+        jsonProtocol.protocol_type = protocol_type.getValue();
+        jsonProtocol.protocol_elements = [];
+      } else {
+        jsonXML.push(jsonProtocol);
+        jsonProtocol = {};
+        jsonProtocol.protocol_type = protocol_type.getValue();
+        jsonProtocol.protocol_elements = [];
+      }
+    }
+    
+    if (fields[i].getName() == 'field') {
+      var jsonActive = {};
+      jsonActive.header = header.getValue();
+      Fields.push(header.getValue());
+      jsonActive.data_type = data_type.getValue();
+      jsonActive.file_field = file_field.getValue();
+      jsonActive.multiple = multiple.getValue();
+      jsonActive.hidden = hidden.getValue();
+      jsonActive.forced_ontology = forced_ontology.getValue();
+      try{jsonActive.comment = fields[i].getChild('description', ns).getValue().replace(/\n/g, "").replace(/\t/g, "")} catch(e){};
+      try{jsonActive.default_value = fields[i].getChild('default-value', ns).getValue().replace(/\n/g, "").replace(/\t/g, "")} catch(e){};
+      try{jsonActive.list_values = fields[i].getChild('list-values', ns).getValue().replace(/\n/g, "").replace(/\t/g, "")} catch(e){};
+      
+      if (fields[i + 1].getName() == 'unit-field'){
+        jsonActive.unit_field = 'TRUE';
+      }
+      
+      if (header.getValue() == 'Sample Name') {
+        if (jsonProtocol.protocol_type !== null) {
+          jsonXML.push(jsonProtocol);
+          jsonProtocol = {};
+        }
+      }
+      
+      if (jsonProtocol.protocol_type == null) {
+        jsonXML.push(jsonActive);
+      } else {
+        jsonProtocol.protocol_elements.push(jsonActive);
+      } 
+    }
+  }
+  
+  return {
+    jsonXML: jsonXML,
+    Protocols: Protocols,
+    Fields: Fields
+  }
 }
-
-
