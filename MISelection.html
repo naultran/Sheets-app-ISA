@@ -89,6 +89,7 @@
       
       var resLink = document.getElementById("source").getAttribute("href");
       google.script.run.withSuccessHandler(onSuccess).createTemplate(JSON.stringify(selected), resLink);
+      
     }
     
     function showSpinner() {

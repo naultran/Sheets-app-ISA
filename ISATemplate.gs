@@ -12,5 +12,7 @@ function createTemplate(chk, source) {
 }
 
 function populateTemplate(MIM, source) {
+  var mimLinks = getMIMLinks();
+  Logger.log(mimLinks);
   var sheet = SpreadsheetApp.getActiveSpreadsheet();
 }

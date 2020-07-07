@@ -62,7 +62,7 @@ function getMIMLinks() {
   return configurations
 }
 
-function parseStudy(fields){ 
+function parseConfig(fields){ 
   var ns = XmlService.getNamespace('http://www.ebi.ac.uk/bii/isatab_configuration#'); //How to find namespace?...
   var jsonXML = [];
   var Protocols = [];
